@@ -117,55 +117,55 @@
 
     <!-- TAB: BERANDA -->
     <section id="tab-home" class="tab-content space-y-4 sm:space-y-6">
-      <div class="bg-gradient-to-br from-emerald-800 via-emerald-700 to-emerald-950 text-white rounded-2xl sm:rounded-3xl p-3 sm:p-6 shadow-lg flex flex-col md:flex-row items-center justify-between gap-3 relative overflow-hidden">
+      <div class="bg-gradient-to-br from-emerald-800 via-emerald-700 to-emerald-950 text-white rounded-2xl sm:rounded-3xl p-4 sm:p-8 shadow-lg flex flex-col md:flex-row items-center justify-between gap-4 relative overflow-hidden">
         <div class="absolute -right-16 -top-16 w-48 h-48 bg-emerald-600/20 rounded-full blur-2xl pointer-events-none"></div>
-        <div class="space-y-2 max-w-2xl relative z-10">
-          <span class="bg-amber-400 text-emerald-950 font-bold px-2.5 py-0.5 rounded-full text-[9px] sm:text-xs uppercase tracking-wider inline-flex items-center gap-1 shadow">
+        <div class="space-y-2.5 max-w-2xl relative z-10">
+          <span class="bg-amber-400 text-emerald-950 font-bold px-3 py-1 rounded-full text-[10px] sm:text-xs uppercase tracking-wider inline-flex items-center gap-1 shadow">
             <span class="material-symbols-outlined text-xs">campaign</span> PPDB 2026/2027 Dibuka
           </span>
-          <h2 class="text-lg sm:text-2xl md:text-3xl font-extrabold tracking-tight leading-snug">Portal Digital Terpadu Yayasan Al-Mubarok</h2>
-          <p class="text-emerald-100 text-[11px] sm:text-xs leading-relaxed">Pusat informasi resmi, pustaka e-book, galeri, dan pendaftaran online PAUD & DTA Al-Mubarok Jayakerta.</p>
-          <div class="flex flex-wrap gap-2 pt-0.5">
-            <button onclick="switchTab('ppdb')" class="touch-target bg-amber-500 hover:bg-amber-600 text-emerald-950 font-bold px-3 py-2 rounded-xl text-xs shadow transition flex items-center gap-1">
-              <span class="material-symbols-outlined text-sm">how_to_reg</span> Daftar Santri Baru
+          <h2 class="text-xl sm:text-3xl md:text-4xl font-extrabold tracking-tight leading-snug">Portal Digital Terpadu Yayasan Al-Mubarok</h2>
+          <p class="text-emerald-100 text-xs sm:text-sm leading-relaxed">Pusat informasi resmi, pustaka e-book, galeri, dan pendaftaran online PAUD & DTA Al-Mubarok Jayakerta.</p>
+          <div class="flex flex-wrap gap-2 pt-1">
+            <button onclick="switchTab('ppdb')" class="touch-target bg-amber-500 hover:bg-amber-600 text-emerald-950 font-bold px-4 py-2.5 rounded-xl text-xs sm:text-sm shadow transition flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-base">how_to_reg</span> Daftar Santri Baru
             </button>
-            <button onclick="switchTab('pustaka')" class="touch-target bg-emerald-900/60 hover:bg-emerald-900 text-white border border-emerald-500/50 font-semibold px-3 py-2 rounded-xl text-xs transition flex items-center gap-1">
-              <span class="material-symbols-outlined text-sm">menu_book</span> Jelajahi Pustaka
+            <button onclick="switchTab('pustaka')" class="touch-target bg-emerald-900/60 hover:bg-emerald-900 text-white border border-emerald-500/50 font-semibold px-4 py-2.5 rounded-xl text-xs sm:text-sm transition flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-base">menu_book</span> Jelajahi Pustaka
             </button>
           </div>
         </div>
-        <div class="bg-white/10 backdrop-blur-md p-3 rounded-xl border border-white/25 w-full md:w-56 text-center space-y-1.5 relative z-10 shadow-inner">
-          <div class="w-8 h-8 bg-amber-400 text-emerald-950 rounded-lg mx-auto flex items-center justify-center shadow">
-            <span class="material-symbols-outlined text-lg">verified</span>
+        <div class="bg-white/10 backdrop-blur-md p-4 rounded-xl border border-white/25 w-full md:w-64 text-center space-y-2 relative z-10 shadow-inner">
+          <div class="w-10 h-10 bg-amber-400 text-emerald-950 rounded-xl mx-auto flex items-center justify-center shadow">
+            <span class="material-symbols-outlined text-xl">verified</span>
           </div>
-          <h3 class="font-bold text-xs sm:text-sm">Terakreditasi & Unggul</h3>
-          <p class="text-[10px] text-emerald-100">Generasi Qur'ani berakhlak mulia & cerdas sejak usia dini.</p>
+          <h3 class="font-bold text-sm sm:text-base">Terakreditasi & Unggul</h3>
+          <p class="text-[11px] text-emerald-100">Generasi Qur'ani berakhlak mulia & cerdas sejak usia dini.</p>
         </div>
       </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
-        <div onclick="switchTab('pustaka')" class="bg-white p-4 sm:p-5 rounded-2xl shadow-sm border border-slate-200/80 hover:shadow-md transition cursor-pointer group">
-          <div class="w-10 h-10 bg-emerald-50 text-emerald-700 rounded-xl flex items-center justify-center mb-2.5 group-hover:scale-105 transition">
-            <span class="material-symbols-outlined text-xl">menu_book</span>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-5">
+        <div onclick="switchTab('pustaka')" class="bg-white p-4 sm:p-6 rounded-2xl shadow-sm border border-slate-200/80 hover:shadow-md transition cursor-pointer group">
+          <div class="w-10 h-10 sm:w-12 sm:h-12 bg-emerald-50 text-emerald-700 rounded-xl flex items-center justify-center mb-3 group-hover:scale-105 transition">
+            <span class="material-symbols-outlined text-xl sm:text-2xl">menu_book</span>
           </div>
-          <h3 class="font-bold text-sm sm:text-base mb-1 text-slate-800">Pustaka Digital</h3>
-          <p class="text-slate-600 text-xs mb-2">Modul belajar dan e-book interaktif PAUD & DTA.</p>
+          <h3 class="font-bold text-base sm:text-lg mb-1 text-slate-800">Pustaka Digital</h3>
+          <p class="text-slate-600 text-xs sm:text-sm mb-2">Modul belajar dan e-book interaktif PAUD & DTA.</p>
           <span class="text-emerald-700 font-semibold text-xs inline-flex items-center gap-1">Buka Pustaka &rarr;</span>
         </div>
-        <div onclick="switchTab('acara')" class="bg-white p-4 sm:p-5 rounded-2xl shadow-sm border border-slate-200/80 hover:shadow-md transition cursor-pointer group">
-          <div class="w-10 h-10 bg-amber-50 text-amber-600 rounded-xl flex items-center justify-center mb-2.5 group-hover:scale-105 transition">
-            <span class="material-symbols-outlined text-xl">event</span>
+        <div onclick="switchTab('acara')" class="bg-white p-4 sm:p-6 rounded-2xl shadow-sm border border-slate-200/80 hover:shadow-md transition cursor-pointer group">
+          <div class="w-10 h-10 sm:w-12 sm:h-12 bg-amber-50 text-amber-600 rounded-xl flex items-center justify-center mb-3 group-hover:scale-105 transition">
+            <span class="material-symbols-outlined text-xl sm:text-2xl">event</span>
           </div>
-          <h3 class="font-bold text-sm sm:text-base mb-1 text-slate-800">Agenda & Berita</h3>
-          <p class="text-slate-600 text-xs mb-2">Ikuti kegiatan pesantren kilat dan pentas seni.</p>
+          <h3 class="font-bold text-base sm:text-lg mb-1 text-slate-800">Agenda & Berita</h3>
+          <p class="text-slate-600 text-xs sm:text-sm mb-2">Ikuti kegiatan pesantren kilat dan pentas seni.</p>
           <span class="text-emerald-700 font-semibold text-xs inline-flex items-center gap-1">Lihat Agenda &rarr;</span>
         </div>
-        <div onclick="switchTab('galeri')" class="bg-white p-4 sm:p-5 rounded-2xl shadow-sm border border-slate-200/80 hover:shadow-md transition cursor-pointer group">
-          <div class="w-10 h-10 bg-emerald-50 text-emerald-700 rounded-xl flex items-center justify-center mb-2.5 group-hover:scale-105 transition">
-            <span class="material-symbols-outlined text-xl">photo_library</span>
+        <div onclick="switchTab('galeri')" class="bg-white p-4 sm:p-6 rounded-2xl shadow-sm border border-slate-200/80 hover:shadow-md transition cursor-pointer group">
+          <div class="w-10 h-10 sm:w-12 sm:h-12 bg-emerald-50 text-emerald-700 rounded-xl flex items-center justify-center mb-3 group-hover:scale-105 transition">
+            <span class="material-symbols-outlined text-xl sm:text-2xl">photo_library</span>
           </div>
-          <h3 class="font-bold text-sm sm:text-base mb-1 text-slate-800">Galeri Foto</h3>
-          <p class="text-slate-600 text-xs mb-2">Dokumentasi momen keceriaan santri tercinta.</p>
+          <h3 class="font-bold text-base sm:text-lg mb-1 text-slate-800">Galeri Foto</h3>
+          <p class="text-slate-600 text-xs sm:text-sm mb-2">Dokumentasi momen keceriaan santri tercinta.</p>
           <span class="text-emerald-700 font-semibold text-xs inline-flex items-center gap-1">Jelajahi Galeri &rarr;</span>
         </div>
       </div>
@@ -187,8 +187,8 @@
           </select>
         </div>
       </div>
-      <!-- 2 columns on mobile, 3 columns on desktop -->
-      <div id="pustakaGrid" class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6"></div>
+      <!-- 2 columns on mobile, 3 on tablet, 4 on desktop -->
+      <div id="pustakaGrid" class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6"></div>
     </section>
 
     <!-- TAB: ACARA & BERITA -->
@@ -197,8 +197,7 @@
         <h2 class="text-xl sm:text-2xl font-bold text-slate-800">Agenda & Berita Yayasan</h2>
         <p class="text-slate-500 text-xs sm:text-sm">Pengumuman resmi dan dokumentasi kegiatan yayasan terbaru.</p>
       </div>
-      <!-- 3 columns on desktop -->
-      <div id="acaraGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6"></div>
+      <div id="acaraGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6"></div>
     </section>
 
     <!-- TAB: GALERI -->
@@ -214,8 +213,8 @@
           <button onclick="filterGaleri('DTA')" class="touch-target galeri-btn flex-1 sm:flex-none px-3.5 py-2 bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition">DTA</button>
         </div>
       </div>
-      <!-- 2 cols on mobile, 3 cols on tablet, 3 cols on desktop -->
-      <div id="galeriGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-3 sm:gap-5"></div>
+      <!-- 2 columns on mobile for compact layout, 3 on tablet, 4 on desktop -->
+      <div id="galeriGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4"></div>
     </section>
 
     <!-- TAB: PPDB ONLINE -->
