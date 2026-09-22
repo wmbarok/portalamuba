@@ -19,7 +19,6 @@
     }
   </script>
   <style>
-    /* ===== MOBILE-FIRST BASE STYLES ===== */
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       background-color: #f1f5f9;
@@ -27,6 +26,18 @@
       padding-bottom: 84px; /* Space for bottom nav on mobile */
     }
     .touch-target { min-height: 48px; min-width: 48px; }
+    
+    /* Carousel smoothness */
+    .hero-slider {
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .hero-slider::-webkit-scrollbar { display: none; }
+    .hero-slide {
+      scroll-snap-align: start;
+      flex-shrink: 0;
+    }
     
     /* ===== TABLET & DESKTOP OVERRIDES ===== */
     @media (min-width: 768px) {
@@ -71,45 +82,62 @@
     </div>
   </header>
 
-  <!-- MOBILE TOP HEADER -->
-  <header class="bg-emerald-900 text-white shadow-md p-3.5 flex justify-between items-center md:hidden sticky top-0 z-40 border-b border-emerald-800">
-    <div class="flex items-center space-x-2.5">
-      <div class="w-8 h-8 rounded-lg bg-amber-500 text-emerald-950 flex items-center justify-center font-bold">
-        <span class="material-symbols-outlined text-xl">school</span>
+  <!-- MOBILE TOP HEADER & SUBHEADER (Inspired by reference layout) -->
+  <header class="bg-white text-slate-800 shadow-sm sticky top-0 z-40 md:hidden border-b border-slate-200">
+    <div class="px-3.5 py-2.5 flex justify-between items-center border-b border-slate-100">
+      <div class="flex items-center space-x-2.5">
+        <div class="w-8 h-8 rounded-lg bg-emerald-900 text-amber-400 flex items-center justify-center font-bold shadow">
+          <span class="material-symbols-outlined text-lg">school</span>
+        </div>
+        <div>
+          <h1 class="font-extrabold text-sm leading-tight text-emerald-950 tracking-tight">AL-MUBAROK</h1>
+        </div>
       </div>
-      <div>
-        <h1 class="font-bold text-sm leading-tight">Al-Mubarok</h1>
-        <p class="text-[10px] text-emerald-200">Portal Jayakerta</p>
+      <div class="flex items-center gap-2">
+        <!-- Live Clock Badge -->
+        <div class="bg-slate-900 text-white font-mono text-[11px] px-2.5 py-1 rounded-full flex items-center gap-1 shadow-inner">
+          <span class="material-symbols-outlined text-xs text-amber-400">schedule</span>
+          <span id="liveClock">18:07:03</span>
+        </div>
+        <button onclick="switchTab('admin')" class="touch-target p-1.5 rounded-xl bg-emerald-50 text-emerald-800 flex items-center justify-center">
+          <span class="material-symbols-outlined text-xl">admin_panel_settings</span>
+        </button>
       </div>
     </div>
-    <div class="flex items-center gap-2">
-      <button onclick="switchTab('admin')" class="touch-target p-2 rounded-xl bg-emerald-800/80 text-amber-300 flex items-center justify-center">
-        <span class="material-symbols-outlined text-xl">admin_panel_settings</span>
-      </button>
+    <!-- Subheader: Date & Islamic Calendar Info -->
+    <div class="px-3.5 py-1.5 bg-slate-50 flex justify-between items-center text-[11px]">
+      <div class="flex items-center gap-1 text-slate-700 font-medium">
+        <span class="material-symbols-outlined text-xs text-emerald-700">calendar_today</span>
+        <span id="currentDateStr">Selasa, 22 September 2026</span>
+      </div>
+      <div class="flex items-center gap-1 bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full font-semibold">
+        <span class="material-symbols-outlined text-xs">nights_stay</span>
+        <span>9 Rabi'ul Akhir 1448 H</span>
+      </div>
     </div>
   </header>
 
   <!-- MOBILE BOTTOM NAVIGATION BAR -->
-  <nav class="md:hidden fixed bottom-0 inset-x-0 bg-white border-t border-slate-200 shadow-lg z-40 px-2 py-1 flex justify-around items-center backdrop-blur-md bg-white/95">
-    <button onclick="switchTab('home')" class="mobile-nav-btn flex flex-col items-center justify-center py-1.5 px-3 rounded-xl text-slate-500 hover:text-emerald-700 transition" data-nav="home">
+  <nav class="md:hidden fixed bottom-0 inset-x-0 bg-slate-900 text-slate-300 border-t border-slate-800 shadow-2xl z-40 px-3 py-2 flex justify-around items-center">
+    <button onclick="switchTab('home')" class="mobile-nav-btn flex flex-col items-center justify-center py-1 px-3 rounded-xl text-slate-400 hover:text-white transition" data-nav="home">
       <span class="material-symbols-outlined text-xl">home</span>
       <span class="text-[10px] font-medium mt-0.5">Beranda</span>
     </button>
-    <button onclick="switchTab('pustaka')" class="mobile-nav-btn flex flex-col items-center justify-center py-1.5 px-3 rounded-xl text-slate-500 hover:text-emerald-700 transition" data-nav="pustaka">
+    <button onclick="switchTab('pustaka')" class="mobile-nav-btn flex flex-col items-center justify-center py-1 px-3 rounded-xl text-slate-400 hover:text-white transition" data-nav="pustaka">
       <span class="material-symbols-outlined text-xl">menu_book</span>
       <span class="text-[10px] font-medium mt-0.5">Pustaka</span>
     </button>
-    <button onclick="switchTab('acara')" class="mobile-nav-btn flex flex-col items-center justify-center py-1.5 px-3 rounded-xl text-slate-500 hover:text-emerald-700 transition" data-nav="acara">
+    <button onclick="switchTab('acara')" class="mobile-nav-btn flex flex-col items-center justify-center py-1 px-3 rounded-xl text-slate-400 hover:text-white transition" data-nav="acara">
       <span class="material-symbols-outlined text-xl">event</span>
       <span class="text-[10px] font-medium mt-0.5">Acara</span>
     </button>
-    <button onclick="switchTab('galeri')" class="mobile-nav-btn flex flex-col items-center justify-center py-1.5 px-3 rounded-xl text-slate-500 hover:text-emerald-700 transition" data-nav="galeri">
+    <button onclick="switchTab('galeri')" class="mobile-nav-btn flex flex-col items-center justify-center py-1 px-3 rounded-xl text-slate-400 hover:text-white transition" data-nav="galeri">
       <span class="material-symbols-outlined text-xl">photo_library</span>
       <span class="text-[10px] font-medium mt-0.5">Galeri</span>
     </button>
-    <button onclick="switchTab('ppdb')" class="mobile-nav-btn flex flex-col items-center justify-center py-1.5 px-3 rounded-xl text-slate-500 hover:text-emerald-700 transition" data-nav="ppdb">
-      <span class="material-symbols-outlined text-xl">how_to_reg</span>
-      <span class="text-[10px] font-medium mt-0.5">PPDB</span>
+    <button onclick="switchTab('admin')" class="mobile-nav-btn flex flex-col items-center justify-center py-1 px-3 rounded-xl text-slate-400 hover:text-white transition" data-nav="admin">
+      <span class="material-symbols-outlined text-xl">admin_panel_settings</span>
+      <span class="text-[10px] font-medium mt-0.5">Admin</span>
     </button>
   </nav>
 
@@ -117,58 +145,136 @@
 
     <!-- TAB: BERANDA -->
     <section id="tab-home" class="tab-content space-y-4 sm:space-y-6">
-      <div class="bg-gradient-to-br from-emerald-800 via-emerald-700 to-emerald-950 text-white rounded-2xl sm:rounded-3xl p-4 sm:p-8 shadow-lg flex flex-col md:flex-row items-center justify-between gap-4 relative overflow-hidden">
-        <div class="absolute -right-16 -top-16 w-48 h-48 bg-emerald-600/20 rounded-full blur-2xl pointer-events-none"></div>
-        <div class="space-y-2.5 max-w-2xl relative z-10">
-          <span class="bg-amber-400 text-emerald-950 font-bold px-3 py-1 rounded-full text-[10px] sm:text-xs uppercase tracking-wider inline-flex items-center gap-1 shadow">
-            <span class="material-symbols-outlined text-xs">campaign</span> PPDB 2026/2027 Dibuka
-          </span>
-          <h2 class="text-xl sm:text-3xl md:text-4xl font-extrabold tracking-tight leading-snug">Portal Digital Terpadu Yayasan Al-Mubarok</h2>
-          <p class="text-emerald-100 text-xs sm:text-sm leading-relaxed">Pusat informasi resmi, pustaka e-book, galeri, dan pendaftaran online PAUD & DTA Al-Mubarok Jayakerta.</p>
-          <div class="flex flex-wrap gap-2 pt-1">
-            <button onclick="switchTab('ppdb')" class="touch-target bg-amber-500 hover:bg-amber-600 text-emerald-950 font-bold px-4 py-2.5 rounded-xl text-xs sm:text-sm shadow transition flex items-center gap-1.5">
-              <span class="material-symbols-outlined text-base">how_to_reg</span> Daftar Santri Baru
-            </button>
-            <button onclick="switchTab('pustaka')" class="touch-target bg-emerald-900/60 hover:bg-emerald-900 text-white border border-emerald-500/50 font-semibold px-4 py-2.5 rounded-xl text-xs sm:text-sm transition flex items-center gap-1.5">
-              <span class="material-symbols-outlined text-base">menu_book</span> Jelajahi Pustaka
-            </button>
+      
+      <!-- SWIPEABLE HERO CAROUSEL SECTION -->
+      <div class="relative rounded-2xl shadow-xl overflow-hidden bg-gradient-to-br from-emerald-950 via-emerald-900 to-slate-900 text-white">
+        <!-- Hero Slides Container -->
+        <div id="heroSlider" class="hero-slider flex overflow-x-auto snap-x snap-mandatory scroll-smooth">
+          
+          <!-- Slide 1: Welcome Banner -->
+          <div class="hero-slide w-full flex-shrink-0 p-5 sm:p-8 flex flex-col justify-between gap-4 relative">
+            <div class="absolute -right-16 -top-16 w-48 h-48 bg-emerald-600/20 rounded-full blur-2xl pointer-events-none"></div>
+            <div class="space-y-2 relative z-10">
+              <span class="bg-amber-400 text-emerald-950 font-extrabold px-3 py-1 rounded-full text-[10px] sm:text-xs uppercase tracking-wider inline-flex items-center gap-1 shadow">
+                <span class="material-symbols-outlined text-xs">campaign</span> PORTAL LITERASI MADRASAH
+              </span>
+              <h2 class="text-xl sm:text-3xl font-extrabold tracking-tight leading-snug">Perpustakaan Digital Al-Mubarok</h2>
+              <p class="text-emerald-100 text-xs sm:text-sm leading-relaxed">Menjelajah Samudra Ilmu, Mencetak Generasi Qur'ani dan Berprestasi.</p>
+            </div>
+            <div class="flex flex-wrap gap-2.5 relative z-10 pt-2">
+              <button onclick="switchTab('ppdb')" class="touch-target bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-4 py-2.5 rounded-xl text-xs shadow transition flex items-center gap-1.5">
+                <span class="material-symbols-outlined text-sm">how_to_reg</span> PPDB 2026/2027
+              </button>
+              <button onclick="switchTab('pustaka')" class="touch-target bg-white/10 hover:bg-white/20 text-white border border-white/30 font-semibold px-4 py-2.5 rounded-xl text-xs transition flex items-center gap-1.5 backdrop-blur-md">
+                <span class="material-symbols-outlined text-sm">menu_book</span> Jelajahi E-Book
+              </button>
+            </div>
           </div>
+
+          <!-- Slide 2: Event Poster Showcase -->
+          <div class="hero-slide w-full flex-shrink-0 p-5 sm:p-8 flex flex-col justify-between gap-4 relative">
+            <div class="absolute -left-16 -bottom-16 w-48 h-48 bg-amber-500/20 rounded-full blur-2xl pointer-events-none"></div>
+            <div class="space-y-2 relative z-10">
+              <span class="bg-emerald-500 text-white font-bold px-3 py-1 rounded-full text-[10px] sm:text-xs uppercase tracking-wider inline-flex items-center gap-1 shadow">
+                <span class="material-symbols-outlined text-xs">event</span> Agenda Utama Yayasan
+              </span>
+              <h2 class="text-xl sm:text-3xl font-extrabold tracking-tight leading-snug">Pesantren Kilat & Pentas Seni Santri</h2>
+              <p class="text-amber-100 text-xs sm:text-sm leading-relaxed">Mari ikuti rangkaian kegiatan semarak Islam untuk melatih kreativitas dan keimanan santri.</p>
+            </div>
+            <div class="flex flex-wrap gap-2.5 relative z-10 pt-2">
+              <button onclick="switchTab('acara')" class="touch-target bg-amber-500 hover:bg-amber-600 text-emerald-950 font-bold px-4 py-2.5 rounded-xl text-xs shadow transition flex items-center gap-1.5">
+                <span class="material-symbols-outlined text-sm">visibility</span> Lihat Semua Agenda
+              </button>
+            </div>
+          </div>
+
         </div>
-        <div class="bg-white/10 backdrop-blur-md p-4 rounded-xl border border-white/25 w-full md:w-64 text-center space-y-2 relative z-10 shadow-inner">
-          <div class="w-10 h-10 bg-amber-400 text-emerald-950 rounded-xl mx-auto flex items-center justify-center shadow">
-            <span class="material-symbols-outlined text-xl">verified</span>
-          </div>
-          <h3 class="font-bold text-sm sm:text-base">Terakreditasi & Unggul</h3>
-          <p class="text-[11px] text-emerald-100">Generasi Qur'ani berakhlak mulia & cerdas sejak usia dini.</p>
+
+        <!-- Carousel Dots Indicator -->
+        <div class="absolute bottom-3 inset-x-0 flex justify-center gap-1.5 z-20">
+          <button onclick="scrollToHeroSlide(0)" class="hero-dot w-2.5 h-2.5 rounded-full bg-white transition-all shadow" id="dot-0"></button>
+          <button onclick="scrollToHeroSlide(1)" class="hero-dot w-2.5 h-2.5 rounded-full bg-white/40 transition-all shadow" id="dot-1"></button>
         </div>
       </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-5">
-        <div onclick="switchTab('pustaka')" class="bg-white p-4 sm:p-6 rounded-2xl shadow-sm border border-slate-200/80 hover:shadow-md transition cursor-pointer group">
-          <div class="w-10 h-10 sm:w-12 sm:h-12 bg-emerald-50 text-emerald-700 rounded-xl flex items-center justify-center mb-3 group-hover:scale-105 transition">
-            <span class="material-symbols-outlined text-xl sm:text-2xl">menu_book</span>
+      <!-- 4 STAT/FEATURE CARDS (2 columns in 1 row for responsive mobile view as requested) -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
+        <div onclick="switchTab('pustaka')" class="bg-white p-4 sm:p-5 rounded-2xl shadow-sm border border-slate-200/80 hover:shadow-md transition cursor-pointer group flex flex-col justify-between">
+          <div class="flex items-center justify-between mb-3">
+            <div class="w-10 h-10 bg-emerald-50 text-emerald-700 rounded-xl flex items-center justify-center group-hover:scale-105 transition shadow-inner">
+              <span class="material-symbols-outlined text-xl">menu_book</span>
+            </div>
+            <span class="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full">Katalog</span>
           </div>
-          <h3 class="font-bold text-base sm:text-lg mb-1 text-slate-800">Pustaka Digital</h3>
-          <p class="text-slate-600 text-xs sm:text-sm mb-2">Modul belajar dan e-book interaktif PAUD & DTA.</p>
-          <span class="text-emerald-700 font-semibold text-xs inline-flex items-center gap-1">Buka Pustaka &rarr;</span>
+          <div>
+            <p class="text-slate-500 text-[11px] sm:text-xs font-semibold uppercase tracking-wide mb-0.5">Total Judul</p>
+            <h3 id="statTotalJudul" class="font-extrabold text-xl sm:text-2xl text-slate-800">4</h3>
+          </div>
         </div>
-        <div onclick="switchTab('acara')" class="bg-white p-4 sm:p-6 rounded-2xl shadow-sm border border-slate-200/80 hover:shadow-md transition cursor-pointer group">
-          <div class="w-10 h-10 sm:w-12 sm:h-12 bg-amber-50 text-amber-600 rounded-xl flex items-center justify-center mb-3 group-hover:scale-105 transition">
-            <span class="material-symbols-outlined text-xl sm:text-2xl">event</span>
+
+        <div onclick="switchTab('pustaka')" class="bg-white p-4 sm:p-5 rounded-2xl shadow-sm border border-slate-200/80 hover:shadow-md transition cursor-pointer group flex flex-col justify-between">
+          <div class="flex items-center justify-between mb-3">
+            <div class="w-10 h-10 bg-amber-50 text-amber-600 rounded-xl flex items-center justify-center group-hover:scale-105 transition shadow-inner">
+              <span class="material-symbols-outlined text-xl">library_books</span>
+            </div>
+            <span class="text-[10px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-full">Modul</span>
           </div>
-          <h3 class="font-bold text-base sm:text-lg mb-1 text-slate-800">Agenda & Berita</h3>
-          <p class="text-slate-600 text-xs sm:text-sm mb-2">Ikuti kegiatan pesantren kilat dan pentas seni.</p>
-          <span class="text-emerald-700 font-semibold text-xs inline-flex items-center gap-1">Lihat Agenda &rarr;</span>
+          <div>
+            <p class="text-slate-500 text-[11px] sm:text-xs font-semibold uppercase tracking-wide mb-0.5">Stok / Jilid</p>
+            <h3 class="font-extrabold text-xl sm:text-2xl text-slate-800">46</h3>
+          </div>
         </div>
-        <div onclick="switchTab('galeri')" class="bg-white p-4 sm:p-6 rounded-2xl shadow-sm border border-slate-200/80 hover:shadow-md transition cursor-pointer group">
-          <div class="w-10 h-10 sm:w-12 sm:h-12 bg-emerald-50 text-emerald-700 rounded-xl flex items-center justify-center mb-3 group-hover:scale-105 transition">
-            <span class="material-symbols-outlined text-xl sm:text-2xl">photo_library</span>
+
+        <div onclick="switchTab('galeri')" class="bg-white p-4 sm:p-5 rounded-2xl shadow-sm border border-slate-200/80 hover:shadow-md transition cursor-pointer group flex flex-col justify-between">
+          <div class="flex items-center justify-between mb-3">
+            <div class="w-10 h-10 bg-emerald-50 text-emerald-700 rounded-xl flex items-center justify-center group-hover:scale-105 transition shadow-inner">
+              <span class="material-symbols-outlined text-xl">photo_library</span>
+            </div>
+            <span class="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full">Galeri</span>
           </div>
-          <h3 class="font-bold text-base sm:text-lg mb-1 text-slate-800">Galeri Foto</h3>
-          <p class="text-slate-600 text-xs sm:text-sm mb-2">Dokumentasi momen keceriaan santri tercinta.</p>
-          <span class="text-emerald-700 font-semibold text-xs inline-flex items-center gap-1">Jelajahi Galeri &rarr;</span>
+          <div>
+            <p class="text-slate-500 text-[11px] sm:text-xs font-semibold uppercase tracking-wide mb-0.5">Foto Kegiatan</p>
+            <h3 id="statTotalGaleri" class="font-extrabold text-xl sm:text-2xl text-slate-800">12</h3>
+          </div>
+        </div>
+
+        <div onclick="switchTab('pustaka')" class="bg-white p-4 sm:p-5 rounded-2xl shadow-sm border border-slate-200/80 hover:shadow-md transition cursor-pointer group flex flex-col justify-between">
+          <div class="flex items-center justify-between mb-3">
+            <div class="w-10 h-10 bg-amber-50 text-amber-600 rounded-xl flex items-center justify-center group-hover:scale-105 transition shadow-inner">
+              <span class="material-symbols-outlined text-xl">description</span>
+            </div>
+            <span class="text-[10px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-full">E-Book</span>
+          </div>
+          <div>
+            <p class="text-slate-500 text-[11px] sm:text-xs font-semibold uppercase tracking-wide mb-0.5">E-Book Digital</p>
+            <h3 id="statTotalEbook" class="font-extrabold text-xl sm:text-2xl text-slate-800">4</h3>
+          </div>
         </div>
       </div>
+
+      <!-- EMBEDDED VIDEO SECTION (PROFESSIONAL INSTITUTIONAL PROFILE / ACTIVITY) -->
+      <div class="bg-white p-5 sm:p-8 rounded-3xl shadow-sm border border-slate-200/80 space-y-4">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+          <div>
+            <div class="flex items-center gap-2 text-emerald-700 text-xs font-extrabold uppercase tracking-wider mb-1">
+              <span class="material-symbols-outlined text-base">smart_display</span> Video Profil & Aktivitas Madrasah
+            </div>
+            <h3 class="font-extrabold text-lg sm:text-xl text-slate-800">Saksikan Kegiatan Belajar & Pentas Seni Santri</h3>
+          </div>
+          <span class="bg-emerald-50 text-emerald-800 text-[11px] font-bold px-3 py-1 rounded-full border border-emerald-200">Live Streaming & Recorded</span>
+        </div>
+        <div class="w-full aspect-video rounded-2xl overflow-hidden bg-slate-900 shadow-xl border border-slate-200 relative">
+          <!-- Embedded YouTube / Google Drive Video Player (Play directly within webapp) -->
+          <iframe src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ?autoplay=0&mute=0&controls=1" 
+                  title="Video Profil Yayasan Al-Mubarok" 
+                  class="w-full h-full border-0" 
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                  allowfullscreen>
+          </iframe>
+        </div>
+        <p class="text-slate-500 text-xs sm:text-sm text-center">Video dokumentasi resmi kegiatan harian santri PAUD & DTA Al-Mubarok Jayakerta.</p>
+      </div>
+
     </section>
 
     <!-- TAB: PUSTAKA DIGITAL -->
@@ -187,8 +293,8 @@
           </select>
         </div>
       </div>
-      <!-- 2 columns on mobile, 3 on tablet, 4 on desktop -->
-      <div id="pustakaGrid" class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6"></div>
+      <!-- 2 cols on mobile, 3 cols on desktop -->
+      <div id="pustakaGrid" class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6"></div>
     </section>
 
     <!-- TAB: ACARA & BERITA -->
@@ -197,7 +303,8 @@
         <h2 class="text-xl sm:text-2xl font-bold text-slate-800">Agenda & Berita Yayasan</h2>
         <p class="text-slate-500 text-xs sm:text-sm">Pengumuman resmi dan dokumentasi kegiatan yayasan terbaru.</p>
       </div>
-      <div id="acaraGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6"></div>
+      <!-- 1 col on mobile, 2 on tablet, 3 on desktop -->
+      <div id="acaraGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6"></div>
     </section>
 
     <!-- TAB: GALERI -->
@@ -213,8 +320,8 @@
           <button onclick="filterGaleri('DTA')" class="touch-target galeri-btn flex-1 sm:flex-none px-3.5 py-2 bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition">DTA</button>
         </div>
       </div>
-      <!-- 2 columns on mobile for compact layout, 3 on tablet, 4 on desktop -->
-      <div id="galeriGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4"></div>
+      <!-- 2 cols on mobile, 3 cols on desktop -->
+      <div id="galeriGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-3 sm:gap-5"></div>
     </section>
 
     <!-- TAB: PPDB ONLINE -->
@@ -439,8 +546,9 @@
                 </select>
               </div>
               <div>
-                <label class="block text-xs sm:text-sm font-semibold text-slate-700 mb-1">Upload File Foto *</label>
-                <input type="file" id="admGlrFile" accept="image/*" onchange="handleImageUpload(event)" class="touch-target w-full px-3.5 py-2 border rounded-xl text-xs sm:text-sm bg-slate-50">
+                <label class="block text-xs sm:text-sm font-semibold text-slate-700 mb-1">Upload File Foto atau URL *</label>
+                <input type="file" id="admGlrFile" accept="image/*" onchange="handleImageUpload(event)" class="touch-target w-full px-3.5 py-2 border rounded-xl text-xs sm:text-sm bg-slate-50 mb-2">
+                <input type="url" id="admGlrUrlInput" placeholder="Atau masukkan Link URL Gambar..." oninput="document.getElementById('admGlrUrl').value=this.value" class="touch-target w-full px-3.5 py-2 border rounded-xl text-xs sm:text-sm">
                 <input type="hidden" id="admGlrUrl">
               </div>
               <div class="sm:col-span-3">
@@ -536,7 +644,62 @@
       fetchPortalData();
       checkAdminSession();
       switchTab('home');
+      initHeroSliderObserver();
+      startLiveClock();
+      updateDateString();
     });
+
+    // Live clock and date generator
+    function startLiveClock() {
+      function updateClock() {
+        var now = new Date();
+        var h = String(now.getHours()).padStart(2, '0');
+        var m = String(now.getMinutes()).padStart(2, '0');
+        var s = String(now.getSeconds()).padStart(2, '0');
+        var clockEl = document.getElementById('liveClock');
+        if (clockEl) clockEl.innerText = h + ':' + m + ':' + s;
+      }
+      updateClock();
+      setInterval(updateClock, 1000);
+    }
+
+    function updateDateString() {
+      var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      var today = new Date();
+      var dateEl = document.getElementById('currentDateStr');
+      if (dateEl) dateEl.innerText = today.toLocaleDateString('id-ID', options);
+    }
+
+    // Hero Swipeable Slider Navigation logic
+    function scrollToHeroSlide(index) {
+      var slider = document.getElementById('heroSlider');
+      if (!slider) return;
+      var slideWidth = slider.clientWidth;
+      slider.scrollTo({ left: slideWidth * index, behavior: 'smooth' });
+      updateHeroDots(index);
+    }
+
+    function initHeroSliderObserver() {
+      var slider = document.getElementById('heroSlider');
+      if (!slider) return;
+      slider.addEventListener('scroll', function() {
+        var index = Math.round(slider.scrollLeft / slider.clientWidth);
+        updateHeroDots(index);
+      });
+    }
+
+    function updateHeroDots(activeIndex) {
+      var dots = document.querySelectorAll('.hero-dot');
+      dots.forEach(function(dot, idx) {
+        if (idx === activeIndex) {
+          dot.classList.remove('bg-white/40', 'w-2.5');
+          dot.classList.add('bg-white', 'w-6');
+        } else {
+          dot.classList.remove('bg-white', 'w-6');
+          dot.classList.add('bg-white/40', 'w-2.5');
+        }
+      });
+    }
 
     // Custom Professional Modal Replacements for alert() and confirm()
     function showCustomAlert(title, message, iconName = 'verified') {
@@ -596,11 +759,11 @@
       var navButtons = document.querySelectorAll('.mobile-nav-btn');
       navButtons.forEach(function(btn) {
         if (btn.getAttribute('data-nav') === tabId) {
-          btn.classList.add('text-emerald-700', 'font-bold');
-          btn.classList.remove('text-slate-500');
+          btn.classList.add('text-white', 'bg-slate-800');
+          btn.classList.remove('text-slate-400');
         } else {
-          btn.classList.remove('text-emerald-700', 'font-bold');
-          btn.classList.add('text-slate-500');
+          btn.classList.remove('text-white', 'bg-slate-800');
+          btn.classList.add('text-slate-400');
         }
       });
 
@@ -613,6 +776,14 @@
           globalData.pustaka = data.pustaka || [];
           globalData.acara = data.acara || [];
           globalData.galeri = data.galeri || [];
+          
+          // Update dynamic stats on Home
+          var totalJudulEl = document.getElementById('statTotalJudul');
+          if (totalJudulEl) totalJudulEl.innerText = globalData.pustaka.length;
+          
+          var totalGaleriEl = document.getElementById('statTotalGaleri');
+          if (totalGaleriEl) totalGaleriEl.innerText = globalData.galeri.length;
+
           renderPustaka(globalData.pustaka);
           renderAcara(globalData.acara);
           renderGaleri(globalData.galeri);
@@ -625,13 +796,14 @@
 
     function renderPustaka(list) {
       var container = document.getElementById('pustakaGrid');
+      if (!container) return;
       if (!list.length) {
         container.innerHTML = '<p class="text-slate-500 col-span-full text-center py-12 text-xs sm:text-sm">Belum ada data pustaka digital yang tersedia.</p>';
         return;
       }
       var html = '';
       list.forEach(function(item) {
-        var coverImg = item.CoverUrl ? item.CoverUrl : 'https://placehold.co/400x520/065f46/ffffff?text=' + encodeURIComponent(item.Judul);
+        var coverImg = (item.CoverUrl && item.CoverUrl.trim() !== '') ? item.CoverUrl : 'https://placehold.co/400x520/065f46/ffffff?text=' + encodeURIComponent(item.Judul);
         html += '<div class="bg-white rounded-2xl shadow-sm border border-slate-200/80 overflow-hidden flex flex-col justify-between hover:shadow-md transition group">' +
                 '  <div>' +
                 '    <div class="relative h-36 sm:h-48 bg-slate-100 overflow-hidden">' +
@@ -678,6 +850,7 @@
 
     function renderAcara(list) {
       var container = document.getElementById('acaraGrid');
+      if (!container) return;
       if (!list.length) {
         container.innerHTML = '<p class="text-slate-500 col-span-full text-center py-12 text-xs sm:text-sm">Belum ada agenda atau berita.</p>';
         return;
@@ -685,7 +858,7 @@
       var html = '';
       list.forEach(function(item) {
         html += '<div class="bg-white rounded-2xl shadow-sm border border-slate-200/80 overflow-hidden flex flex-col">' +
-                (item.ImageUrl ? '<img src="' + item.ImageUrl + '" class="w-full h-44 sm:h-52 object-cover">' : '') +
+                (item.ImageUrl ? '<img src="' + item.ImageUrl + '" class="w-full h-44 sm:h-52 object-cover" onerror="this.style.display=\'none\'">' : '') +
                 '  <div class="p-4 sm:p-6 space-y-2.5 flex-grow">' +
                 '    <div class="flex justify-between items-center">' +
                 '      <span class="bg-amber-100 text-amber-800 text-[10px] sm:text-xs font-bold px-2.5 py-0.5 sm:py-1 rounded-full">' + item.Kategori + '</span>' +
@@ -701,15 +874,17 @@
 
     function renderGaleri(list) {
       var container = document.getElementById('galeriGrid');
+      if (!container) return;
       if (!list.length) {
         container.innerHTML = '<p class="text-slate-500 col-span-full text-center py-12 text-xs sm:text-sm">Belum ada foto galeri.</p>';
         return;
       }
       var html = '';
       list.forEach(function(item) {
-        html += '<div onclick="openLightbox(\'' + item.ImageUrl + '\', \'' + escapeHtml(item.Judul) + '\')" class="bg-white rounded-2xl shadow-sm border border-slate-200/80 overflow-hidden cursor-pointer group">' +
+        var imgUrl = (item.ImageUrl && item.ImageUrl.trim() !== '') ? item.ImageUrl : 'https://placehold.co/400x300/065f46/ffffff?text=Galeri';
+        html += '<div onclick="openLightbox(\'' + imgUrl + '\', \'' + escapeHtml(item.Judul) + '\')" class="bg-white rounded-2xl shadow-sm border border-slate-200/80 overflow-hidden cursor-pointer group">' +
                 '  <div class="relative overflow-hidden h-36 sm:h-48 bg-slate-100">' +
-                '    <img src="' + item.ImageUrl + '" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">' +
+                '    <img src="' + imgUrl + '" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" onerror="this.src=\'https://placehold.co/400x300/065f46/ffffff?text=Foto\'">' +
                 '    <span class="absolute top-2 right-2 bg-black/60 text-white text-[9px] sm:text-[10px] font-bold px-2 py-0.5 rounded">' + item.Kategori + '</span>' +
                 '  </div>' +
                 '  <div class="p-3"><p class="font-semibold text-slate-800 text-xs truncate">' + item.Judul + '</p></div>' +
@@ -817,6 +992,7 @@
         .withSuccessHandler(function(list) {
           globalData.ppdb = list || [];
           var tbody = document.getElementById('tablePPDBAdmin');
+          if (!tbody) return;
           if (!list.length) {
             tbody.innerHTML = '<tr><td colspan="5" class="p-6 text-center text-slate-500 text-xs sm:text-sm">Belum ada pendaftar PPDB.</td></tr>';
             return;
@@ -888,6 +1064,8 @@
         var reader = new FileReader();
         reader.onload = function(event) {
           document.getElementById('admGlrUrl').value = event.target.result;
+          var urlInput = document.getElementById('admGlrUrlInput');
+          if (urlInput) urlInput.value = event.target.result;
         };
         reader.readAsDataURL(file);
       }
@@ -895,18 +1073,25 @@
 
     function submitAddGaleri(e) {
       e.preventDefault();
+      var imageUrlVal = document.getElementById('admGlrUrl').value || (document.getElementById('admGlrUrlInput') ? document.getElementById('admGlrUrlInput').value : '');
       var data = {
         judul: document.getElementById('admGlrJudul').value,
         kategori: document.getElementById('admGlrKat').value,
-        imageUrl: document.getElementById('admGlrUrl').value
+        imageUrl: imageUrlVal
       };
       if (!data.imageUrl) {
-        showCustomAlert('Perhatian', 'Silakan pilih file gambar terlebih dahulu!', 'warning');
+        showCustomAlert('Perhatian', 'Silakan pilih file gambar atau masukkan URL gambar terlebih dahulu!', 'warning');
         return;
       }
       google.script.run
         .withSuccessHandler(function() {
           showCustomAlert('Berhasil', 'Foto galeri berhasil disimpan!', 'photo_library').then(function() {
+            document.getElementById('admGlrJudul').value = '';
+            document.getElementById('admGlrUrl').value = '';
+            var urlIn = document.getElementById('admGlrUrlInput');
+            if (urlIn) urlIn.value = '';
+            var fileIn = document.getElementById('admGlrFile');
+            if (fileIn) fileIn.value = '';
             fetchPortalData();
           });
         })
@@ -973,7 +1158,7 @@
       
       body.innerHTML = '<div class="text-center space-y-3">' +
                        '  <h3 class="font-bold text-base sm:text-lg text-slate-800">' + title + '</h3>' +
-                       '  <img src="' + url + '" class="max-h-[65vh] sm:max-h-[70vh] mx-auto rounded-2xl object-contain shadow-md">' +
+                       '  <img src="' + url + '" class="max-h-[65vh] sm:max-h-[70vh] mx-auto rounded-2xl object-contain shadow-md" onerror="this.src=\'https://placehold.co/600x400/065f46/ffffff?text=Gagal+Memuat+Gambar\'">' +
                        '  <div><a href="' + url + '" target="_blank" download class="inline-block bg-emerald-700 hover:bg-emerald-800 text-white font-bold px-4 py-2 rounded-xl text-xs sm:text-sm transition">Unduh Foto Asli</a></div>' +
                        '</div>';
       modal.classList.remove('hidden');
