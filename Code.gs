@@ -149,3 +149,84 @@ function deleteRowById(sheetName, id) {
   }
   throw new Error('Data dengan ID ' + id + ' tidak ditemukan.');
 }
+
+/* =====================================================
+   LOGO MANAGEMENT (Header & Footer Identity)
+   Disimpan di Google Drive + URL di Script Properties
+   ===================================================== */
+
+function getLogos() {
+  var props = PropertiesService.getScriptProperties();
+  return {
+    headerLogo: props.getProperty('HEADER_LOGO_URL') || '',
+    footerLogo: props.getProperty('FOOTER_LOGO_URL') || ''
+  };
+}
+
+function getOrCreateLogoFolder() {
+  var props = PropertiesService.getScriptProperties();
+  var folderId = props.getProperty('LOGO_FOLDER_ID');
+  if (folderId) {
+    try {
+      return DriveApp.getFolderById(folderId);
+    } catch (e) {
+      // Folder lama telah dihapus, buat baru di bawah
+    }
+  }
+  var folder = DriveApp.createFolder('Al-Mubarok Portal - Logo Assets');
+  props.setProperty('LOGO_FOLDER_ID', folder.getId());
+  return folder;
+}
+
+function uploadLogo(base64Data, fileName, logoType) {
+  if (!base64Data) throw new Error('Data logo tidak ditemukan.');
+  if (logoType !== 'header' && logoType !== 'footer') throw new Error('Tipe logo tidak valid.');
+
+  var props = PropertiesService.getScriptProperties();
+  var idKey = logoType === 'header' ? 'HEADER_LOGO_ID' : 'FOOTER_LOGO_ID';
+  var urlKey = logoType === 'header' ? 'HEADER_LOGO_URL' : 'FOOTER_LOGO_URL';
+
+  var oldId = props.getProperty(idKey);
+  if (oldId) {
+    try { DriveApp.getFileById(oldId).setTrashed(true); } catch (e) {}
+  }
+
+  var s = String(base64Data);
+  var commaIdx = s.indexOf(',');
+  var base64 = commaIdx >= 0 ? s.substring(commaIdx + 1) : s;
+  var mimeMatch = s.match(/^data:([^;]+);/);
+  var mimeType = mimeMatch ? mimeMatch[1] : 'image/png';
+
+  var safeName = String(fileName || ('logo-' + logoType + '.png')).replace(/[^a-zA-Z0-9._-]/g, '_');
+  if (!safeName) safeName = 'logo-' + logoType + '.png';
+
+  var blob = Utilities.newBlob(Utilities.base64Decode(base64), mimeType, safeName);
+  var folder = getOrCreateLogoFolder();
+  var file = folder.createFile(blob);
+
+  try {
+    file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
+  } catch (e) {}
+
+  var fileId = file.getId();
+  var imageUrl = 'https://drive.google.com/thumbnail?id=' + fileId + '&sz=w1000';
+
+  props.setProperty(idKey, fileId);
+  props.setProperty(urlKey, imageUrl);
+
+  return { success: true, url: imageUrl, fileId: fileId };
+}
+
+function deleteLogo(logoType) {
+  if (logoType !== 'header' && logoType !== 'footer') throw new Error('Tipe logo tidak valid.');
+  var props = PropertiesService.getScriptProperties();
+  var idKey = logoType === 'header' ? 'HEADER_LOGO_ID' : 'FOOTER_LOGO_ID';
+  var urlKey = logoType === 'header' ? 'HEADER_LOGO_URL' : 'FOOTER_LOGO_URL';
+  var oldId = props.getProperty(idKey);
+  if (oldId) {
+    try { DriveApp.getFileById(oldId).setTrashed(true); } catch (e) {}
+  }
+  props.deleteProperty(idKey);
+  props.deleteProperty(urlKey);
+  return { success: true };
+}
